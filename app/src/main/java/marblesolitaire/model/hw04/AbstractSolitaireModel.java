@@ -8,7 +8,7 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
   protected SlotState[][] board;
 
   /**
-   * Default constructor that creates an octagonal board
+   * Default constructor that creates an board
    * whose sides have length 3, with the empty slot in
    * the center of the board
    */
@@ -41,7 +41,7 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
   }
 
   /**
-   * Constructor with three parameters (arm thickness/sidelength, row col),
+   * Constructor with three parameters (arm thickness/side length, row col),
    * to specify the size of the board and the initial position
    * of the empty slot
    *
@@ -66,8 +66,39 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
     this.board[row][col] = SlotState.Empty;
   }
 
+  /**
+   * Constructor for testing initBoard
+   *
+   * @param notInit      do not initialize board
+   * @param armThickness determines the armThickness of the game board
+   * @param row          row of empty slot
+   * @param col          column of empty slot
+   */
+  public AbstractSolitaireModel(boolean notInit, int armThickness, int row, int col) {
+    this.armThickness = armThickness;
+    this.size = 3 * armThickness - 2;
+    this.board = new SlotState[this.size][this.size];
+    this.board[row][col] = SlotState.Empty;
+
+  }
 
 
+
+  /**
+   * To move a marble from cell to another empty cell
+   *
+   * @param fromRow the row number of the position to be moved from
+   *                (starts at 0)
+   * @param fromCol the column number of the position to be moved from
+   *                starts at 0)
+   * @param toRow   the row number of the position to be moved to
+   *                (starts at 0)
+   * @param toCol   the column number of the position to be moved to
+   *                (starts at 0)
+   * @throws IllegalArgumentException if invalid starting/ending position
+   * @throws IllegalArgumentException if ending position is empty
+   * @throws IllegalArgumentException if move is not exactly two positions away from starting location
+   */
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
     if (!isValid(fromRow, fromCol)) {
@@ -100,9 +131,31 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
     }
   }
 
-  abstract void initBoard();
+  /**
+   * Initializes board by looping through board and determining slot state
+   */
+  private void initBoard() {
+    for (int i = 0; i < this.getBoardSize(); i++) {
+      for (int j = 0; j < this.getBoardSize(); j++) {
+        if (isValid(i, j)) {
+          this.board[i][j] = SlotState.Marble;
+        } else {
+          this.board[i][j] = SlotState.Invalid;
+        }
+      }
+    }
+  }
 
-  abstract boolean isValid(int row, int col);
+  /**
+   * determines if a given slot position is a valid state
+   * a valid slot is in the game board, slots out of bounds
+   * are not valid
+   *
+   * @param row the row of position
+   * @param col the column of position
+   * @return if the slot is valid
+   */
+  protected abstract boolean isValid(int row, int col);
 
   @Override
   public boolean isGameOver() {
@@ -134,8 +187,26 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
    *                (starts at 0)
    * @return if there are moves possible from this point
    */
-  abstract boolean movePossible(int fromRow, int fromCol, int toRow, int toCol);
+  protected boolean movePossible(int fromRow, int fromCol, int toRow, int toCol) {
+    //check if ending cell is valid and if it is empty
+    if (!isValid(toRow, toCol) || this.getSlotAt(toRow, toCol) != SlotState.Empty) {
+      return false;
+    }
+    //check if starting cell and middle cell are marbles
+    if ((Math.abs(fromRow - toRow) == 2 && fromCol == toCol) ||
+            (Math.abs(fromCol - toCol) == 2 && fromRow == toRow)) {
+      int midRow = (fromRow + toRow) / 2;
+      int midCol = (fromCol + toCol) / 2;
+      return this.getSlotAt(midRow, midCol) == SlotState.Marble && this.getSlotAt(fromRow, fromCol) == SlotState.Marble;
+    }
+    return false;
+  }
 
+  /**
+   * Return the size of this board. The size is roughly the longest dimension of a board
+   *
+   * @return the size as an integer
+   */
   @Override
   public int getBoardSize() {
     return this.size;

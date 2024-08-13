@@ -151,23 +151,22 @@ class EnglishSolitaireModelTest {
     //test method
     this.reset();
 
-    assertEquals(this.model3x3.board[3][3], MarbleSolitaireModelState.SlotState.Empty);
+    assertEquals(this.model3x3.getSlotAt(3, 3), MarbleSolitaireModelState.SlotState.Empty);
     this.model3x3.move(3, 5, 3, 3);
-    assertEquals(this.model3x3.board[3][3], MarbleSolitaireModelState.SlotState.Marble);
-    assertEquals(this.model3x3.board[3][4], MarbleSolitaireModelState.SlotState.Empty);
+    assertEquals(this.model3x3.getSlotAt(3, 3), MarbleSolitaireModelState.SlotState.Marble);
+    assertEquals(this.model3x3.getSlotAt(3, 4), MarbleSolitaireModelState.SlotState.Empty);
 
-    assertEquals(this.model3x3.board[3][4], MarbleSolitaireModelState.SlotState.Empty);
+    assertEquals(this.model3x3.getSlotAt(3,4), MarbleSolitaireModelState.SlotState.Empty);
     this.model3x3.move(5, 4, 3, 4);
-    assertEquals(this.model3x3.board[3][4], MarbleSolitaireModelState.SlotState.Marble);
-    assertEquals(this.model3x3.board[4][4], MarbleSolitaireModelState.SlotState.Empty);
-    assertEquals(this.model3x3.board[5][4], MarbleSolitaireModelState.SlotState.Empty);
+    assertEquals(this.model3x3.getSlotAt(3,4), MarbleSolitaireModelState.SlotState.Marble);
+    assertEquals(this.model3x3.getSlotAt(4,4), MarbleSolitaireModelState.SlotState.Empty);
+    assertEquals(this.model3x3.getSlotAt(5,4), MarbleSolitaireModelState.SlotState.Empty);
 
-    assertEquals(this.model5x5.board[8][6], MarbleSolitaireModelState.SlotState.Marble);
+    assertEquals(this.model5x5.getSlotAt(8,6), MarbleSolitaireModelState.SlotState.Marble);
     this.model5x5.move(8, 6, 6, 6);
-    assertEquals(this.model5x5.board[8][6], MarbleSolitaireModelState.SlotState.Empty);
-    assertEquals(this.model5x5.board[7][6], MarbleSolitaireModelState.SlotState.Empty);
-    assertEquals(this.model5x5.board[6][6], MarbleSolitaireModelState.SlotState.Marble);
-
+    assertEquals(this.model5x5.getSlotAt(8,6), MarbleSolitaireModelState.SlotState.Empty);
+    assertEquals(this.model5x5.getSlotAt(7,6), MarbleSolitaireModelState.SlotState.Empty);
+    assertEquals(this.model5x5.getSlotAt(6,6), MarbleSolitaireModelState.SlotState.Marble);
 
   }
 
