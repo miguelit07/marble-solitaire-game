@@ -25,7 +25,6 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
    */
   public AbstractSolitaireModel(int armThickness) {
     this(armThickness, ((armThickness * 3) - 2) / 2, ((armThickness * 3) - 2) / 2);
-
   }
 
   /**
@@ -82,6 +81,22 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
 
   }
 
+  /**
+   * Constructor for TriangleSoitiaireModels
+   *
+   * @param row the row of the empty slot
+   * @param col the col of the empty slot
+   * @param numberOfRows the number of rows in the board
+   * @param numberOfCols the number of cols in the board
+   */
+  public AbstractSolitaireModel(int row, int col, int numberOfRows, int numberOfCols) {
+    this.armThickness = numberOfRows;
+    this.size = numberOfCols;
+    this.board = new SlotState[numberOfRows][numberOfCols];
+    this.initBoard();
+    this.board[row][col] = SlotState.Empty;
+
+  }
 
 
   /**
@@ -134,7 +149,7 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
   /**
    * Initializes board by looping through board and determining slot state
    */
-  private void initBoard() {
+  protected void initBoard() {
     for (int i = 0; i < this.getBoardSize(); i++) {
       for (int j = 0; j < this.getBoardSize(); j++) {
         if (isValid(i, j)) {
