@@ -124,7 +124,7 @@ public class MarbleSolitaireTextView implements MarbleSolitaireView {
       //if in top or bottom area, check if the current column is the last column
       //if not a final column and not a marble, will return true to add space, and vice versa.
       return col < this.modelBoardSize - this.modelArmThickness
-              //if beyond cross-section, check if marble
+              //if beyond cross-section, check if slot is a marble
               || ((this.model.getSlotAt(row, col).equals(MarbleSolitaireModelState.SlotState.Marble)
               //if next slot to right of marble is invalid, then do not add space
               && !(this.model.getSlotAt(row, col + 1).equals(MarbleSolitaireModelState.SlotState.Invalid))));
