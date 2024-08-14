@@ -172,6 +172,11 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
    */
   protected abstract boolean isValid(int row, int col);
 
+  /**
+   * Method to check if current game is over,
+   * meaning there are no possible moves left
+   * @return if the game is over
+   */
   @Override
   public boolean isGameOver() {
     for (int row = 0; row < this.getBoardSize(); row++) {

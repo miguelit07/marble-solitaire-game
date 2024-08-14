@@ -3,8 +3,11 @@ package marblesolitaire.controller;
 import java.io.IOException;
 import java.util.Scanner;
 
+import marblesolitaire.model.hw02.EnglishSolitaireModel;
 import marblesolitaire.model.hw02.MarbleSolitaireModel;
 import marblesolitaire.model.hw02.MarbleSolitaireModelState;
+import marblesolitaire.model.hw04.EuropeanSolitaireModel;
+import marblesolitaire.model.hw04.TriangleSolitaireModel;
 import marblesolitaire.view.MarbleSolitaireView;
 
 /**
@@ -103,6 +106,20 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
     } catch (IOException e) {
       throw new IllegalStateException("Illegal state" + e.getMessage(), e);
     }
+
+//    try {
+//      this.view.renderBoard();
+//    } catch (IOException e) {
+//      throw new IllegalStateException("Failed to render the board: " + e.getMessage(), e);
+//    }
+//
+//
+//    try {
+//      this.view.renderMessage("\nScore: " + this.model.getScore());
+//    } catch (IOException e) {
+//      throw new IllegalStateException("Failed to render message: " + e.getMessage(), e);
+//    }
+
   }
 
   /**
@@ -215,11 +232,21 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
       return false;
     }
 
-    //Check if starting cell and middle cell are marbles
-    if ((Math.abs(fromRow - toRow) == 2 && fromCol == toCol) ||
-            (Math.abs(fromCol - toCol) == 2 && fromRow == toRow)) {
-      int midRow = (fromRow + toRow) / 2;
-      int midCol = (fromCol + toCol) / 2;
+    if (this.model instanceof EnglishSolitaireModel
+            || this.model instanceof EuropeanSolitaireModel) {
+      //Check if starting cell and middle cell are marbles
+      if ((Math.abs(fromRow - toRow) == 2 && fromCol == toCol) ||
+              (Math.abs(fromCol - toCol) == 2 && fromRow == toRow)) {
+        int midRow = (fromRow + toRow) / 2;
+        int midCol = (fromCol + toCol) / 2;
+        return this.model.getSlotAt(midRow, midCol) == MarbleSolitaireModelState.SlotState.Marble
+                && this.model.getSlotAt(fromRow, fromCol) == MarbleSolitaireModelState.SlotState.Marble;
+      }
+    }
+    if (this.model instanceof TriangleSolitaireModel) {
+      int midRow = Math.abs(fromRow + toRow) / 2;
+      int midCol = Math.abs(fromCol + toCol) / 2;
+
       return this.model.getSlotAt(midRow, midCol) == MarbleSolitaireModelState.SlotState.Marble
               && this.model.getSlotAt(fromRow, fromCol) == MarbleSolitaireModelState.SlotState.Marble;
     }

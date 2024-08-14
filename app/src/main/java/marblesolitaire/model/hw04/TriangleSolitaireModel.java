@@ -136,7 +136,7 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
     int colDiff = Math.abs(toCol - fromCol);
 
 //    if ((rowDiff == 2 && colDiff == 0) || (rowDiff == 0 && colDiff == 2)) {
-      int middleRow = Math.abs(fromRow - toRow) / 2;
+      int middleRow = Math.abs(fromRow + toRow) / 2;
       int middleCol = Math.abs(fromCol + toCol) / 2;
 
       if (this.board[middleRow][middleCol] == SlotState.Marble) {
@@ -150,6 +150,85 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
 //    } else {
 //      throw new IllegalArgumentException("This move is illegal. Move must be two horizontal or vertical steps");
 //    }
+  }
+
+  /**
+   * Return the number of marbles currently on the board.
+   *
+   * @return the number of marbles currently on the board as an int
+   */
+  @Override
+  public int getScore() {
+    int startingScore = 0;
+
+    for (int i = 0; i < this.armThickness; i++) {
+      for (int j = 0; j < this.getBoardSize(); j++) {
+        if (this.board[i][j] == SlotState.Marble) {
+          startingScore++;
+        }
+      }
+    }
+    return startingScore;
+  }
+
+  /**
+   * Method to check if current game is over,
+   * meaning there are no possible moves left
+   * @return if the game is over
+   */
+  @Override
+  public boolean isGameOver() {
+    for (int row = 0; row < this.armThickness; row++) {
+      for (int col = 0; col < this.getBoardSize(); col++) {
+        //Check for a valid move to the right
+        if (movePossible(row, col, row, col + 4)) {
+          return false;
+        }
+        //Check for a valid move to the left
+        if (movePossible(row, col, row, col - 4)) {
+          return false;
+        }
+        //Check for a valid lower right diagonal move
+        if (movePossible(row, col, row + 2, col + 4)) {
+          return false;
+        }
+        //Check for a valid upper right diagonal move
+        if (movePossible(row, col, row - 2, col + 2)) {
+          return false;
+        }
+        //Check for an upper left diagonal move
+        if (movePossible(row, col, row - 2, col - 2)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Determines if there are moves possible based of given origin row and column
+   * and destination row and column. Helper function for isGameOver()
+   *
+   * @param fromRow the row number of the position to be moved from
+   *                (starts at 0)
+   * @param fromCol the column number of the position to be moved from
+   *                starts at 0)
+   * @param toRow   the row number of the position to be moved to
+   *                (starts at 0)
+   * @param toCol   the column number of the position to be moved to
+   *                (starts at 0)
+   * @return if there are moves possible from this point
+   */
+  protected boolean movePossible(int fromRow, int fromCol, int toRow, int toCol) {
+    //Check if ending cell is valid and if it is empty
+    if (!isValid(toRow, toCol) || this.getSlotAt(toRow, toCol) != SlotState.Empty) {
+      return false;
+    }
+
+    //Check if from slot and middle slot is a marble
+    int midRow = Math.abs(fromRow + toRow) / 2;
+    int midCol = Math.abs(fromCol + toCol) / 2;
+    return this.getSlotAt(midRow, midCol) == SlotState.Marble && this.getSlotAt(fromRow, fromCol) == SlotState.Marble;
   }
 
   public static void main(String[] args) {
@@ -172,12 +251,8 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
     triangleModel5.move(2, 2,0,4);
     System.out.println(viewTriangle5);
 
-
-
-
-
-
-
+    triangleModel5.move(3, 5,1,3);
+    System.out.println(viewTriangle5);
 
   }
 }
