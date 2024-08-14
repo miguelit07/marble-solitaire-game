@@ -84,18 +84,26 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
   /**
    * Constructor for TriangleSoitiaireModels
    *
-   * @param row the row of the empty slot
-   * @param col the col of the empty slot
+   * @param row          the row of the empty slot
+   * @param col          the col of the empty slot
    * @param numberOfRows the number of rows in the board
    * @param numberOfCols the number of cols in the board
    */
   public AbstractSolitaireModel(int row, int col, int numberOfRows, int numberOfCols) {
+    if (numberOfRows < 1) {
+      throw new IllegalArgumentException("Dimensions must be a positive number.");
+    }
+
     this.armThickness = numberOfRows;
     this.size = numberOfCols;
     this.board = new SlotState[numberOfRows][numberOfCols];
     this.initBoard();
-    this.board[row][col] = SlotState.Empty;
 
+    if (!this.isValid(row, col)) {
+      throw new IllegalArgumentException("Empty slot position must be valid");
+    }
+
+    this.board[row][col] = SlotState.Empty;
   }
 
 
@@ -175,6 +183,7 @@ public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
   /**
    * Method to check if current game is over,
    * meaning there are no possible moves left
+   *
    * @return if the game is over
    */
   @Override

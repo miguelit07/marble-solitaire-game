@@ -122,12 +122,12 @@ public class EuropeanSolitaireModel extends AbstractSolitaireModel {
     }
   }
 
-  public static void main(String args[]) {
-    EuropeanSolitaireModel europeanModel = new EuropeanSolitaireModel();
-    MarbleSolitaireTextView viewEuropean = new MarbleSolitaireTextView(europeanModel);
-    System.out.println(viewEuropean);
-    europeanModel.move(3, 1, 3, 3);
-    System.out.println(viewEuropean);
-
-  }
+//  public static void main(String args[]) {
+//    EuropeanSolitaireModel europeanModel = new EuropeanSolitaireModel();
+//    MarbleSolitaireTextView viewEuropean = new MarbleSolitaireTextView(europeanModel);
+//    System.out.println(viewEuropean);
+//    europeanModel.move(3, 1, 3, 3);
+//    System.out.println(viewEuropean);
+//
+//  }
 }

@@ -18,13 +18,10 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
    * (number of slots in the bottom-most row) and the empty slot at (0,0).
    *
    * @param dimensions the number of slots in the bottom-most row
-   * @throws IllegalArgumentException if dimensions is not a positive number
+   * @throws IllegalArgumentException if dimensions is not a positive number (throws in super constructor)
    */
   public TriangleSolitaireModel(int dimensions) {
     this(dimensions, 0, dimensions - 1);
-    if (dimensions < 1) {
-      throw new IllegalArgumentException("Dimensions must be a positive number.");
-    }
   }
 
   /**
@@ -33,13 +30,10 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
    *
    * @param row the row of the empty slot
    * @param col the col of the empty slot
-   * @throws IllegalArgumentException if empty slot position is invalid
+   * @throws IllegalArgumentException if empty slot position is invalid (throws in super constructor)
    */
   public TriangleSolitaireModel(int row, int col) {
     this(5, row, col);
-    if (!this.isValid(row, col)) {
-      throw new IllegalArgumentException("Empty slot position must be valid");
-    }
   }
 
   /**
@@ -50,15 +44,10 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
    * @param row        the row of the empty slot
    * @param col        the col of the empty slot
    * @throws IllegalArgumentException if empty slot position is invalid
+   *                                  or if dimensions is non-positive (throws in super constructor)
    */
   public TriangleSolitaireModel(int dimensions, int row, int col) {
     super(row, col, dimensions, ((dimensions * 2) - 1));
-//    if (!this.isValid(row, col)) {
-//      throw new IllegalArgumentException("Empty slot position must be valid");
-//    }
-    if (dimensions < 1) {
-      throw new IllegalArgumentException("Dimensions must be a positive number.");
-    }
   }
 
   /**
@@ -77,8 +66,6 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
       }
     }
   }
-
-
 
   @Override
   protected boolean isValid(int row, int col) {
@@ -136,17 +123,17 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
     int colDiff = Math.abs(toCol - fromCol);
 
 //    if ((rowDiff == 2 && colDiff == 0) || (rowDiff == 0 && colDiff == 2)) {
-      int middleRow = Math.abs(fromRow + toRow) / 2;
-      int middleCol = Math.abs(fromCol + toCol) / 2;
+    int middleRow = Math.abs(fromRow + toRow) / 2;
+    int middleCol = Math.abs(fromCol + toCol) / 2;
 
-      if (this.board[middleRow][middleCol] == SlotState.Marble) {
-        this.board[middleRow][middleCol] = SlotState.Empty;
-        this.board[fromRow][fromCol] = SlotState.Empty;
-        this.board[toRow][toCol] = SlotState.Marble;
+    if (this.board[middleRow][middleCol] == SlotState.Marble) {
+      this.board[middleRow][middleCol] = SlotState.Empty;
+      this.board[fromRow][fromCol] = SlotState.Empty;
+      this.board[toRow][toCol] = SlotState.Marble;
 
-      } else {
-        throw new IllegalArgumentException("The middle position is empty " + middleRow + "," + middleCol);
-      }
+    } else {
+      throw new IllegalArgumentException("The middle position is empty " + middleRow + "," + middleCol);
+    }
 //    } else {
 //      throw new IllegalArgumentException("This move is illegal. Move must be two horizontal or vertical steps");
 //    }
@@ -174,6 +161,7 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
   /**
    * Method to check if current game is over,
    * meaning there are no possible moves left
+   *
    * @return if the game is over
    */
   @Override
@@ -238,21 +226,22 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
 //    europeanModel.move(3, 1, 3, 3);
 //    System.out.println(viewEuropean);
 
-    TriangleSolitaireModel triangleModel = new TriangleSolitaireModel(7, 2,8);
+    TriangleSolitaireModel triangleModel = new TriangleSolitaireModel(7, 2, 8);
     TriangleSolitaireTextView viewTriangle = new TriangleSolitaireTextView(triangleModel);
     System.out.println(viewTriangle);
 
-    triangleModel.move(0, 6,2,8);
+    triangleModel.move(0, 6, 2, 8);
     System.out.println(viewTriangle);
 
     TriangleSolitaireModel triangleModel5 = new TriangleSolitaireModel();
     TriangleSolitaireTextView viewTriangle5 = new TriangleSolitaireTextView(triangleModel5);
     System.out.println(viewTriangle5);
-    triangleModel5.move(2, 2,0,4);
+    triangleModel5.move(2, 2, 0, 4);
     System.out.println(viewTriangle5);
 
-    triangleModel5.move(3, 5,1,3);
+    triangleModel5.move(3, 5, 1, 3);
     System.out.println(viewTriangle5);
+    System.out.println(triangleModel5.getSlotAt(0, 4));
 
   }
 }
