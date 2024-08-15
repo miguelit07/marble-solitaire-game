@@ -176,10 +176,6 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
         if (movePossible(row, col, row, col - 4)) {
           return false;
         }
-        //Check for a valid lower right diagonal move
-        if (movePossible(row, col, row + 2, col + 4)) {
-          return false;
-        }
         //Check for a valid upper right diagonal move
         if (movePossible(row, col, row - 2, col + 2)) {
           return false;
@@ -219,29 +215,50 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
     return this.getSlotAt(midRow, midCol) == SlotState.Marble && this.getSlotAt(fromRow, fromCol) == SlotState.Marble;
   }
 
-  public static void main(String[] args) {
-//    EuropeanSolitaireModel europeanModel = new EuropeanSolitaireModel();
-//    MarbleSolitaireTextView viewEuropean = new MarbleSolitaireTextView(europeanModel);
-//    System.out.println(viewEuropean);
-//    europeanModel.move(3, 1, 3, 3);
-//    System.out.println(viewEuropean);
+//  public static void main(String[] args) {
+////    EuropeanSolitaireModel europeanModel = new EuropeanSolitaireModel();
+////    MarbleSolitaireTextView viewEuropean = new MarbleSolitaireTextView(europeanModel);
+////    System.out.println(viewEuropean);
+////    europeanModel.move(3, 1, 3, 3);
+////    System.out.println(viewEuropean);
+//
+//    TriangleSolitaireModel triangleModel = new TriangleSolitaireModel(7, 2, 8);
+//    TriangleSolitaireTextView viewTriangle = new TriangleSolitaireTextView(triangleModel);
+//    System.out.println(viewTriangle);
+//
+//    triangleModel.move(0, 6, 2, 8);
+//    System.out.println(viewTriangle);
+//
+//    TriangleSolitaireModel triangleModel5 = new TriangleSolitaireModel();
+//    TriangleSolitaireTextView viewTriangle5 = new TriangleSolitaireTextView(triangleModel5);
+//    System.out.println(viewTriangle5);
+//    triangleModel5.move(2, 2, 0, 4);
+//    System.out.println(viewTriangle5);
+//
+//    triangleModel5.move(3, 5, 1, 3);
+//    System.out.println(viewTriangle5);
+//    System.out.println(triangleModel5.getSlotAt(0, 4));
+//
 
-    TriangleSolitaireModel triangleModel = new TriangleSolitaireModel(7, 2, 8);
-    TriangleSolitaireTextView viewTriangle = new TriangleSolitaireTextView(triangleModel);
-    System.out.println(viewTriangle);
-
-    triangleModel.move(0, 6, 2, 8);
-    System.out.println(viewTriangle);
-
-    TriangleSolitaireModel triangleModel5 = new TriangleSolitaireModel();
-    TriangleSolitaireTextView viewTriangle5 = new TriangleSolitaireTextView(triangleModel5);
-    System.out.println(viewTriangle5);
-    triangleModel5.move(2, 2, 0, 4);
-    System.out.println(viewTriangle5);
-
-    triangleModel5.move(3, 5, 1, 3);
-    System.out.println(viewTriangle5);
-    System.out.println(triangleModel5.getSlotAt(0, 4));
-
-  }
+//    TriangleSolitaireModel triangleModel = new TriangleSolitaireModel();
+//    TriangleSolitaireTextView viewTriangle = new TriangleSolitaireTextView(triangleModel);
+//    System.out.println(viewTriangle);
+//
+//    triangleModel.move(2, 2, 0, 4);
+//    triangleModel.move(3, 5, 1, 3);
+//    triangleModel.move(4, 0, 2, 2);
+//    triangleModel.move(1, 3, 3, 1);
+//    triangleModel.move(4, 4, 2, 2);
+//    triangleModel.move(4, 8, 4, 4);
+//    triangleModel.move(3, 1, 1, 3);
+//    triangleModel.move(0, 4, 2, 2);
+//    triangleModel.move(2, 6, 0, 4);
+//    triangleModel.move(4, 2, 4, 6);
+//    System.out.println(viewTriangle);
+//
+//
+//    System.out.println(triangleModel.isGameOver());
+//
+//
+//  }
 }

@@ -75,7 +75,7 @@ public class TriangleSolitaireTextView implements MarbleSolitaireView {
           output.append(" ");
         }
       }
-      if (i < this.modelCols - 1) {
+      if (i < this.modelRows - 1) {
         output.append("\n");
       }
     }

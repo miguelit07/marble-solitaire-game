@@ -102,8 +102,8 @@ public final class MarbleSolitaire {
         throw new IllegalArgumentException("Illegal game type");
     }
 
-   // controller = new MarbleSolitaireControllerImpl(model, view, new InputStreamReader(System.in));
-   // controller.playGame();
+    controller = new MarbleSolitaireControllerImpl(model, view, new InputStreamReader(System.in));
+    controller.playGame();
 
     System.out.print(view);
 
