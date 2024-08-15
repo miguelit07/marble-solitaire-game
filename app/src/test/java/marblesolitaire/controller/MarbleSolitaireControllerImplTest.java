@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import marblesolitaire.model.hw02.EnglishSolitaireModel;
+import marblesolitaire.model.hw04.TriangleSolitaireModel;
 import marblesolitaire.view.MarbleSolitaireTextView;
+import marblesolitaire.view.TriangleSolitaireTextView;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -22,6 +24,14 @@ class MarbleSolitaireControllerImplTest {
   Readable userInputReader;
   String startMessage;
   String starting3x3board;
+
+  TriangleSolitaireModel triangleModel5;
+  TriangleSolitaireTextView triangleView;
+  MarbleSolitaireControllerImpl triangleController;
+  Appendable triangleStringBuilder;
+  Readable triangleUserInputReader;
+  String startingTriangleBoard;
+
 
   @BeforeEach
   void setUp() {
@@ -38,6 +48,16 @@ class MarbleSolitaireControllerImplTest {
             "O O O O O O O\n" +
             "    O O O\n" +
             "    O O O";
+
+    triangleModel5 = new TriangleSolitaireModel();
+    triangleStringBuilder = new StringBuilder();
+    triangleView = new TriangleSolitaireTextView(triangleModel5, triangleStringBuilder);
+    startingTriangleBoard = "    _\n" +
+            "   O O\n" +
+            "  O O O\n" +
+            " O O O O\n" +
+            "O O O O O";
+
   }
 
   /**
@@ -50,6 +70,12 @@ class MarbleSolitaireControllerImplTest {
     stringBuilder = new StringBuilder();
     textView3x3 = new MarbleSolitaireTextView(model3x3, stringBuilder);
     controller3x3Append = new MarbleSolitaireControllerImpl(model3x3, textView3x3, userInputReader);
+
+
+    triangleUserInputReader = new StringReader(userInput);
+    triangleStringBuilder = new StringBuilder();
+    triangleView = new TriangleSolitaireTextView(triangleModel5, triangleStringBuilder);
+    triangleController = new MarbleSolitaireControllerImpl(triangleModel5, triangleView, userInputReader);
   }
 
   /**
@@ -67,10 +93,11 @@ class MarbleSolitaireControllerImplTest {
       new MarbleSolitaireControllerImpl(this.model3x3, null, this.userInputReader);
     });
 
-    //Test if view is null
+    //Test if readable is null
     assertThrows(IllegalArgumentException.class, () -> {
       new MarbleSolitaireControllerImpl(this.model3x3, this.textView3x3, null);
     });
+
   }
 
   //test if playGame renders initial board and messages correctly
@@ -82,6 +109,13 @@ class MarbleSolitaireControllerImplTest {
     assertEquals(this.starting3x3board + "\nScore: " + "32"
                     + "\n" + this.startMessage,
             this.stringBuilder.toString());
+
+    //Triangle Test
+    this.setUp();
+    this.initializeController("");
+    this.triangleController.playGame();
+    assertEquals(this.startingTriangleBoard + "\nScore: " + "14"
+            + "\n" + this.startMessage, this.triangleStringBuilder.toString());
   }
 
   //test if playGame renders valid user input
@@ -183,6 +217,20 @@ class MarbleSolitaireControllerImplTest {
                     "    O O O\n" +
                     "Score: 29",
             this.stringBuilder.toString());
+
+    //Test triangle
+    this.setUp();
+    this.initializeController("3 3 1 5");
+    this.triangleController.playGame();
+    assertEquals(this.startingTriangleBoard + "\nScore: " + "14"
+            + "\n" + this.startMessage + "    O\n" +
+            "   _ O\n" +
+            "  _ O O\n" +
+            " O O O O\n" +
+            "O O O O O\n" +
+            "Score: 13", this.triangleStringBuilder.toString());
+
+
   }
 
   //Test if playGame renders valid user input
@@ -247,6 +295,19 @@ class MarbleSolitaireControllerImplTest {
                     "    O O O\n" +
                     "Score: 31",
             this.stringBuilder.toString());
+
+    //Test triangle
+    this.setUp();
+    this.initializeController("3 \n 3 \n 1 \n 5");
+    this.triangleController.playGame();
+    assertEquals(this.startingTriangleBoard + "\nScore: " + "14"
+            + "\n" + this.startMessage + "    O\n" +
+            "   _ O\n" +
+            "  _ O O\n" +
+            " O O O O\n" +
+            "O O O O O\n" +
+            "Score: 13", this.triangleStringBuilder.toString());
+
   }
 
   //Test when user quits game
@@ -323,6 +384,25 @@ class MarbleSolitaireControllerImplTest {
                     "    O O O\n" +
                     "Score: 31",
             this.stringBuilder.toString());
+
+    //test triangle
+    this.setUp();
+    this.initializeController("3 3 1 5 \n q");
+    this.triangleController.playGame();
+    assertEquals(this.startingTriangleBoard + "\nScore: " + "14"
+            + "\n" + this.startMessage + "    O\n" +
+            "   _ O\n" +
+            "  _ O O\n" +
+            " O O O O\n" +
+            "O O O O O\n" +
+            "Score: 13" + "Game quit!\n" +
+            "State of game when quit:\n" +
+            "    O\n" +
+            "   _ O\n" +
+            "  _ O O\n" +
+            " O O O O\n" +
+            "O O O O O\n" +
+            "Score: 13", this.triangleStringBuilder.toString());
   }
 
   //Test when game is over
@@ -618,6 +698,22 @@ class MarbleSolitaireControllerImplTest {
                     " Try again:",
             this.stringBuilder.toString());
 
+    //Test triangle
+    this.setUp();
+    this.initializeController(" ");
+    this.triangleController.playGame();
+    assertEquals(this.startingTriangleBoard + "\nScore: " + "14\n" +
+            this.startMessage + "Invalid input, line must have at least one character.\n" +
+            " Try again:", this.triangleStringBuilder.toString());
+
+    this.setUp();
+    this.initializeController("4 \n \n");
+    this.triangleController.playGame();
+    assertEquals(this.startingTriangleBoard + "\nScore: " + "14\n" +
+            this.startMessage + "Invalid input, line must have at least one character.\n" +
+            " Try again:", this.triangleStringBuilder.toString());
+
+
   }
 
   //Test when user inputs an illegal move
@@ -660,5 +756,13 @@ class MarbleSolitaireControllerImplTest {
                     "Invalid move. Play again. \n" +
                     this.starting3x3board + "\nScore: " + "32",
             this.stringBuilder.toString());
+
+    //Test triangle
+    this.setUp();
+    this.initializeController("5 50 4 5");
+    this.triangleController.playGame();
+    assertEquals(this.startingTriangleBoard + "\nScore: " + "14\n" +
+            this.startMessage + "Invalid move. Play again. \n" +
+            this.startingTriangleBoard + "\nScore: " + "14", this.triangleStringBuilder.toString());
   }
 }

@@ -48,7 +48,10 @@ class TriangleSolitaireTextViewTest {
    */
   @Test
   void testConstructor() {
-    assertThrows(IllegalArgumentException.class, () -> new MarbleSolitaireTextView(null));
+    assertThrows(IllegalArgumentException.class, () -> new TriangleSolitaireTextView(null));
+    assertThrows(IllegalArgumentException.class, () -> new TriangleSolitaireTextView(null, sb));
+    assertThrows(IllegalArgumentException.class, () -> new TriangleSolitaireTextView(model5Length, null));
+
   }
 
   @Test
