@@ -12,6 +12,9 @@ import marblesolitaire.view.MarbleSolitaireTextView;
 import marblesolitaire.view.MarbleSolitaireView;
 import marblesolitaire.view.TriangleSolitaireTextView;
 
+/**
+ * Main method to play MarbleSolitaire game
+ */
 public final class MarbleSolitaire {
   public static void main(String[] args) {
     MarbleSolitaireModel model = null;
@@ -32,7 +35,7 @@ public final class MarbleSolitaire {
         case "triangular":
           gameType = args[i];
           break;
-        case "-size:":
+        case "-size":
           if (i + 1 < args.length) {
             size = Integer.parseInt(args[++i]);
           }
@@ -104,8 +107,6 @@ public final class MarbleSolitaire {
 
     controller = new MarbleSolitaireControllerImpl(model, view, new InputStreamReader(System.in));
     controller.playGame();
-
-    System.out.print(view);
 
   }
 }

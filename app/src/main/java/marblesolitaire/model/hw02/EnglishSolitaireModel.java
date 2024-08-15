@@ -2,6 +2,9 @@ package marblesolitaire.model.hw02;
 
 import marblesolitaire.model.hw04.AbstractSolitaireModel;
 
+/**
+ * Represents an english model board
+ */
 public class EnglishSolitaireModel extends AbstractSolitaireModel {
 
   /**

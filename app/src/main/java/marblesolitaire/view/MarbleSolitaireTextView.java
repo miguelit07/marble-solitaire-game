@@ -4,6 +4,10 @@ import java.io.IOException;
 
 import marblesolitaire.model.hw02.MarbleSolitaireModelState;
 
+/**
+ * Represents the view of the marble solitaire game shown
+ * through text form
+ */
 public class MarbleSolitaireTextView implements MarbleSolitaireView {
 
   private final MarbleSolitaireModelState model;

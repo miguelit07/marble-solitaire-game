@@ -2,6 +2,9 @@ package marblesolitaire.model.hw04;
 
 import marblesolitaire.model.hw02.MarbleSolitaireModel;
 
+/**
+ * Abstract method to abstract all models of solitaire game
+ */
 public abstract class AbstractSolitaireModel implements MarbleSolitaireModel {
   protected final int armThickness;
   protected final int size;

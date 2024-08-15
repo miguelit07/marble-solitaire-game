@@ -1,12 +1,8 @@
 package marblesolitaire.model.hw04;
 
-import java.io.StringReader;
-
-import marblesolitaire.controller.MarbleSolitaireController;
-import marblesolitaire.controller.MarbleSolitaireControllerImpl;
-import marblesolitaire.model.hw02.MarbleSolitaireModel;
-import marblesolitaire.view.MarbleSolitaireTextView;
-
+/**
+ * Represents a European model of solitaire game
+ */
 public class EuropeanSolitaireModel extends AbstractSolitaireModel {
 
   /**
@@ -121,13 +117,4 @@ public class EuropeanSolitaireModel extends AbstractSolitaireModel {
       return false;
     }
   }
-
-//  public static void main(String args[]) {
-//    EuropeanSolitaireModel europeanModel = new EuropeanSolitaireModel();
-//    MarbleSolitaireTextView viewEuropean = new MarbleSolitaireTextView(europeanModel);
-//    System.out.println(viewEuropean);
-//    europeanModel.move(3, 1, 3, 3);
-//    System.out.println(viewEuropean);
-//
-//  }
 }

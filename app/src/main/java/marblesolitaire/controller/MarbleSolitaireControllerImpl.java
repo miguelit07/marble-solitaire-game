@@ -106,20 +106,6 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
     } catch (IOException e) {
       throw new IllegalStateException("Illegal state" + e.getMessage(), e);
     }
-
-//    try {
-//      this.view.renderBoard();
-//    } catch (IOException e) {
-//      throw new IllegalStateException("Failed to render the board: " + e.getMessage(), e);
-//    }
-//
-//
-//    try {
-//      this.view.renderMessage("\nScore: " + this.model.getScore());
-//    } catch (IOException e) {
-//      throw new IllegalStateException("Failed to render message: " + e.getMessage(), e);
-//    }
-
   }
 
   /**
@@ -232,6 +218,7 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
       return false;
     }
 
+    //If the model of this controller is an english or european
     if (this.model instanceof EnglishSolitaireModel
             || this.model instanceof EuropeanSolitaireModel) {
       //Check if starting cell and middle cell are marbles
@@ -243,10 +230,12 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
                 && this.model.getSlotAt(fromRow, fromCol) == MarbleSolitaireModelState.SlotState.Marble;
       }
     }
+    //If this model of this controller is a triangle
     if (this.model instanceof TriangleSolitaireModel) {
       int midRow = Math.abs(fromRow + toRow) / 2;
       int midCol = Math.abs(fromCol + toCol) / 2;
 
+      //Check if from and middle slot are marbles
       return this.model.getSlotAt(midRow, midCol) == MarbleSolitaireModelState.SlotState.Marble
               && this.model.getSlotAt(fromRow, fromCol) == MarbleSolitaireModelState.SlotState.Marble;
     }

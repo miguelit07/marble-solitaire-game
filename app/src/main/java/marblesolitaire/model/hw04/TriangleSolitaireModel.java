@@ -1,8 +1,8 @@
 package marblesolitaire.model.hw04;
 
-import marblesolitaire.view.MarbleSolitaireTextView;
-import marblesolitaire.view.TriangleSolitaireTextView;
-
+/**
+ * Represents triangle model of solitaire game
+ */
 public class TriangleSolitaireModel extends AbstractSolitaireModel {
 
   /**
@@ -54,7 +54,7 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
    * Initializes board by looping through board and determining slot state
    */
   protected void initBoard() {
-    //number of rows is now based on armThickness (dimensions)
+    //number of rows is for triangles is based on armThickness (dimensions)
     for (int i = 0; i < this.armThickness; i++) {
       //number of col is now the horizontal size of board
       for (int j = 0; j < this.getBoardSize(); j++) {
@@ -67,6 +67,15 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
     }
   }
 
+  /**
+   * Determines if a given slot position is a valid state
+   * a valid slot is in the game board, slots out of bounds
+   * are not valid
+   *
+   * @param row the row of position
+   * @param col the column of position
+   * @return if the slot is valid
+   */
   @Override
   protected boolean isValid(int row, int col) {
     //Calculates distance of current row to bottom row
@@ -74,10 +83,6 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
 
     //If the distance from the bottom row is even
     if (distanceFromRow % 2 == 0) {
-      //TODO, this is probably unnecessary
-//      if (distanceFromRow == this.armThickness) {
-//        return col == (size + 1)/ 2;
-//      }
       return (col % 2 == 0)
               && (col >= distanceFromRow)
               && (col < size - distanceFromRow);
@@ -118,15 +123,13 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
     if (this.getSlotAt(toRow, toCol) != SlotState.Empty) {
       throw new IllegalArgumentException("Ending cell position is not empty " + toRow + "," + toCol);
     }
-
-    int rowDiff = Math.abs(toRow - fromRow);
-    int colDiff = Math.abs(toCol - fromCol);
-
-//    if ((rowDiff == 2 && colDiff == 0) || (rowDiff == 0 && colDiff == 2)) {
+    //Calculate slots between from and to slots
     int middleRow = Math.abs(fromRow + toRow) / 2;
     int middleCol = Math.abs(fromCol + toCol) / 2;
 
+    //If middle slot is a marble
     if (this.board[middleRow][middleCol] == SlotState.Marble) {
+      //Change marbles from move
       this.board[middleRow][middleCol] = SlotState.Empty;
       this.board[fromRow][fromCol] = SlotState.Empty;
       this.board[toRow][toCol] = SlotState.Marble;
@@ -134,9 +137,6 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
     } else {
       throw new IllegalArgumentException("The middle position is empty " + middleRow + "," + middleCol);
     }
-//    } else {
-//      throw new IllegalArgumentException("This move is illegal. Move must be two horizontal or vertical steps");
-//    }
   }
 
   /**
@@ -176,11 +176,11 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
         if (movePossible(row, col, row, col - 4)) {
           return false;
         }
-        //Check for a valid upper right diagonal move
+        //Check for a valid right diagonal move
         if (movePossible(row, col, row - 2, col + 2)) {
           return false;
         }
-        //Check for an upper left diagonal move
+        //Check for a valid left diagonal move
         if (movePossible(row, col, row - 2, col - 2)) {
           return false;
         }
@@ -214,51 +214,4 @@ public class TriangleSolitaireModel extends AbstractSolitaireModel {
     int midCol = Math.abs(fromCol + toCol) / 2;
     return this.getSlotAt(midRow, midCol) == SlotState.Marble && this.getSlotAt(fromRow, fromCol) == SlotState.Marble;
   }
-
-//  public static void main(String[] args) {
-////    EuropeanSolitaireModel europeanModel = new EuropeanSolitaireModel();
-////    MarbleSolitaireTextView viewEuropean = new MarbleSolitaireTextView(europeanModel);
-////    System.out.println(viewEuropean);
-////    europeanModel.move(3, 1, 3, 3);
-////    System.out.println(viewEuropean);
-//
-//    TriangleSolitaireModel triangleModel = new TriangleSolitaireModel(7, 2, 8);
-//    TriangleSolitaireTextView viewTriangle = new TriangleSolitaireTextView(triangleModel);
-//    System.out.println(viewTriangle);
-//
-//    triangleModel.move(0, 6, 2, 8);
-//    System.out.println(viewTriangle);
-//
-//    TriangleSolitaireModel triangleModel5 = new TriangleSolitaireModel();
-//    TriangleSolitaireTextView viewTriangle5 = new TriangleSolitaireTextView(triangleModel5);
-//    System.out.println(viewTriangle5);
-//    triangleModel5.move(2, 2, 0, 4);
-//    System.out.println(viewTriangle5);
-//
-//    triangleModel5.move(3, 5, 1, 3);
-//    System.out.println(viewTriangle5);
-//    System.out.println(triangleModel5.getSlotAt(0, 4));
-//
-
-//    TriangleSolitaireModel triangleModel = new TriangleSolitaireModel();
-//    TriangleSolitaireTextView viewTriangle = new TriangleSolitaireTextView(triangleModel);
-//    System.out.println(viewTriangle);
-//
-//    triangleModel.move(2, 2, 0, 4);
-//    triangleModel.move(3, 5, 1, 3);
-//    triangleModel.move(4, 0, 2, 2);
-//    triangleModel.move(1, 3, 3, 1);
-//    triangleModel.move(4, 4, 2, 2);
-//    triangleModel.move(4, 8, 4, 4);
-//    triangleModel.move(3, 1, 1, 3);
-//    triangleModel.move(0, 4, 2, 2);
-//    triangleModel.move(2, 6, 0, 4);
-//    triangleModel.move(4, 2, 4, 6);
-//    System.out.println(viewTriangle);
-//
-//
-//    System.out.println(triangleModel.isGameOver());
-//
-//
-//  }
 }
